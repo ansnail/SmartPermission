@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+import java.util.ArrayList;
+
 /**
  * Created by yanjie on 17/6/28.
  * 权限检测入口
@@ -33,16 +35,8 @@ public class SmartPermission {
      * @param permission 权限名称
      * @return 是否拥有此权限
      */
-    public boolean hasPermission(@NonNull Object context, @NonNull String permission) {
-        if (context instanceof Activity) {
-            return ContextCompat.checkSelfPermission((Activity) context, permission) != PackageManager.PERMISSION_GRANTED;
-        } else if (context instanceof Fragment) {
-            return ContextCompat.checkSelfPermission(((Fragment) context).getContext(), permission) != PackageManager.PERMISSION_GRANTED;
-        } else if (context instanceof android.app.Fragment) {
-            return ContextCompat.checkSelfPermission(((Fragment) context).getContext(), permission) != PackageManager.PERMISSION_GRANTED;
-        } else {
-            throw new IllegalArgumentException("Context只适用于Activity和Fragment");
-        }
+    public boolean hasPermission(@NonNull Context context, @NonNull String permission) {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
@@ -50,9 +44,26 @@ public class SmartPermission {
      *
      * @param context     上下文
      * @param permissions 权限名称数组
-     * @return 没有权限数组
+     * @return 没有权限的list，调用者可以根据list的情况进行判断
      */
-    public String[] hasPermission(@NonNull Object context, @NonNull String[] permissions) {
-        return null;
+    public ArrayList<String> hasPermission(@NonNull Context context, @NonNull String... permissions) {
+        ArrayList<String> noPermissionLists = new ArrayList<>();
+        for (String permission:permissions) {
+            if (!hasPermission(context,permission)){
+                noPermissionLists.add(permission);
+            }
+        }
+        return noPermissionLists;
     }
+
+
+    public void requestPermission(@NonNull Object context, @NonNull String permission) {
+        if (context instanceof Activity) {
+        } else if (context instanceof Fragment) {
+        } else if (context instanceof android.app.Fragment) {
+        } else {
+            throw new IllegalArgumentException("Context只适用于Activity和Fragment");
+        }
+    }
+
 }
