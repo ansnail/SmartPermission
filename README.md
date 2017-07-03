@@ -32,8 +32,12 @@ SmartPermission.getInstance()
 > public boolean hasPermission(@NonNull Context context, @NonNull String... permissions)
 
 2.请求权限
-```SmartPermission.getInstance()
+```
+SmartPermission.getInstance()
             .context(context)
             .permission(permissions)
             .request(requestCode, PermissionRequestCallback);
 ```
+## 联系
+在使用过程中遇到任何问题请联系
+androidman@yeah.net
