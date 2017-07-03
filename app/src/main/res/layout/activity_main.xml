@@ -14,18 +14,26 @@
         android:id="@+id/btn_getSingle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="获取单个权限" />
-
-    <Button
-        android:id="@+id/btn_getMulti"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="获取多个权限" />
-
+        android:text="请求权限" />
 
     <TextView
-        android:id="@+id/tv_log"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="没有的权限：" />
+
+    <TextView
+        android:id="@+id/without_tv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用户不再询问的权限：" />
+
+    <TextView
+        android:id="@+id/denied_tv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
 
 </LinearLayout>

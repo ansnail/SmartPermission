@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">smartlibrary</string>
+    <string name="hiti">温馨提示</string>
+    <string name="content">APP运行需依赖此权限，请到设置界面进行授权</string>
+    <string name="sure">去设置</string>
+    <string name="cancle">取消</string>
 </resources>
