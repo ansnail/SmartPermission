@@ -54,13 +54,24 @@ public class SmartPermission {
      * @param permissions 权限名称数组
      * @return 权限组中的一个或多个没有权限
      */
-    private boolean hasPermission(@NonNull Context context, @NonNull String... permissions) {
+    public boolean hasPermission(@NonNull Context context, @NonNull String... permissions) {
         for (String permission : permissions) {
             if (!hasPermission(context, permission)) {
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * 是否拥有了请求的所有权限
+     *
+     * @param context     上下文
+     * @param permissions 权限名称数组
+     * @return 是否拥有了请求的所有权限
+     */
+    public boolean isOwnAllPermission(@NonNull Context context, @NonNull String... permissions) {
+        return hasPermission(context, permissions);
     }
 
 
@@ -124,17 +135,6 @@ public class SmartPermission {
         return this;
     }
 
-    /**
-     * 向用户解释以前拒绝并不再询问的权限需要的必要性
-     *
-     * @param dialog 用户自定义dialog，向用户解释需要权限原因
-     * @return SmartPermission
-     */
-    public SmartPermission dialog(Dialog dialog) {
-        this.dialog = dialog;
-        return this;
-    }
-
     public SmartPermission context(Activity activity) {
         mActivityOrFragment = activity;
         mContext = activity;
@@ -173,23 +173,15 @@ public class SmartPermission {
     }
 
     private void requestPermission(Object mActivityOrFragment, int requestCode, @NonNull String... permissions) {
-        if (hasRationalePermission(mActivityOrFragment, permissions)) {
-            if (dialog != null) {
-                dialog.show();
-            } else {
-                SmartUtils.showDialog(mContext);
-            }
-        } else {
-            if (mActivityOrFragment instanceof Activity) {
-                Activity activity = (Activity) mActivityOrFragment;
-                activity.requestPermissions(permissions, requestCode);
-            } else if (mActivityOrFragment instanceof Fragment) {
-                Fragment fragment = (Fragment) mActivityOrFragment;
-                fragment.requestPermissions(permissions, requestCode);
-            } else if (mActivityOrFragment instanceof android.app.Fragment) {
-                android.app.Fragment fragment = (android.app.Fragment) mActivityOrFragment;
-                fragment.requestPermissions(permissions, requestCode);
-            }
+        if (mActivityOrFragment instanceof Activity) {
+            Activity activity = (Activity) mActivityOrFragment;
+            activity.requestPermissions(permissions, requestCode);
+        } else if (mActivityOrFragment instanceof Fragment) {
+            Fragment fragment = (Fragment) mActivityOrFragment;
+            fragment.requestPermissions(permissions, requestCode);
+        } else if (mActivityOrFragment instanceof android.app.Fragment) {
+            android.app.Fragment fragment = (android.app.Fragment) mActivityOrFragment;
+            fragment.requestPermissions(permissions, requestCode);
         }
     }
 
@@ -223,6 +215,4 @@ public class SmartPermission {
         }
 
     }
-
-
 }
